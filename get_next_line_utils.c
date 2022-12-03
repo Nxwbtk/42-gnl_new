@@ -38,7 +38,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-int	ha_nee(char *str,char c)
+int	ha_nee(char *str, char c)
 {
 	int	i;
 
