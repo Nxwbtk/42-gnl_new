@@ -73,7 +73,7 @@ char	*arn(int fd, char *buff, char *line)
 	while (khanhad)
 	{
 		buff[khanhad] = '\0';
-		line = ft_strjoin(line, buff);
+		line = ft_strjoin(line, buff); //leak here
 		if ((khanhad < BUFFER_SIZE && khanhad > 0) || ha_nee(line, '\n'))
 			break ;
 		khanhad = read(fd, buff, BUFFER_SIZE);
