@@ -15,6 +15,9 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5
 # endif
+# if BUFFER_SIZE < 1
+#  define BUFFER_SIZE 1024
+# endif
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -24,7 +27,7 @@
 char	*get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_piset_len(const char *s);
-int		ha_n(char *str);
+int	    ha_nee(char *str,char c);
 size_t	ft_strlen(const char *s);
 
 #endif

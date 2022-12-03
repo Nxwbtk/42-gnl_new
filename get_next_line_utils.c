@@ -38,7 +38,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-int	ha_n(char *str)
+int	ha_nee(char *str,char c)
 {
 	int	i;
 
@@ -47,14 +47,14 @@ int	ha_n(char *str)
 		return (0);
 	while (str[i])
 	{
-		if (str[i] == '\n')
+		if (str[i] == c)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-char	*lets_join(char *res, char const *s1, char const *s2)
+static char	*lets_join(char *res, char const *s1, char const *s2)
 {
 	size_t	i;
 	size_t	j;

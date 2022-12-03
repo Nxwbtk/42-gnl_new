@@ -19,9 +19,13 @@ char	*teelua(char *line)
 	size_t	len_left;
 	size_t	len_ret;
 
-	len_left = ft_strlen(line) - ft_piset_len(line);
+	if (!line[0])
+	{
+		free(line);
+		return (NULL);
+	}
 	len_ret = ft_piset_len(line);
-	printf("len_ret: %zu\n", len_ret);
+	len_left = ft_strlen(line) - len_ret;
 	tmp = (char *)malloc(sizeof(char) * (len_left + 1));
 	if (!tmp)
 		return (NULL);
@@ -47,6 +51,8 @@ char	*find_result(char *s)
 	int		i;
 
 	i = 0;
+	if (!s[0])
+		return (NULL);
 	result = (char *)malloc(sizeof(char) * (ft_piset_len(s) + 1));
 	if (!result)
 		return (NULL);
@@ -64,49 +70,73 @@ char	*find_result(char *s)
 	return (result);
 }
 
-char	*arn(int fd, char *line)
-{
-	char	*buf;
-	int		re_si;
+// char	*arn(int fd, char *line)
+// {
+// 	char	*buf;
+// 	int		re_si;
 
-	re_si = 1;
-	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	while (re_si > 0)
-	{
-		re_si = read(fd, buf, BUFFER_SIZE);
-		if (re_si == -1)
-		{
-			free(buf);
-			return (0);
-		}
-		buf[re_si] = '\0';
-		line = ft_strjoin(line, buf);
-		if (ha_n(buf))
-			break ;
-	}
-	free(buf);
-	return (line);
-}
+// 	re_si = 1;
+// 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1)); // malloc check
+// 	while (re_si > 0)
+// 	{
+// 		re_si = read(fd, buf, BUFFER_SIZE);
+// 		// printf("%d\n", re_si);
+// 		buf[re_si] = '\0';
+// 		// printf("%s %d ", buf, re_si);
+// 		if (re_si == -1)
+// 		{
+// 			free(buf);
+// 			return (0);
+// 		}
+// 		// line = ft_strjoin(line, buf);
+// 		if (ha_nee(line, '\n') || (ft_strlen(line) > 0 && !ha_nee(line, '\n')))
+// 			break ;
+// 		if (re_si == 0)
+// 		{
+// 			// line = ft_strjoin(line, buf)
+// 			free (line);
+// 			free(buf);
+// 			printf("\nre_si = 0\n");
+// 			return (NULL);
+// 		}
+// 	}
+// 	free(buf);
+// 	// printf("%s", line);
+// 	return (line);
+// }
 
 char	*get_next_line(int fd)
 {
 	static char	*line;
 	char		*res;
+	int			khanhad;
+	char		*buff;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (NULL);
 	if (!line)
 	{
-		line = malloc(1);
+		line = malloc(1); //malloc check
 		*line = '\0';
 	}
-	line = arn(fd, line);
-	if (!line)
+	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1)); // malloc check
+	// khanhad = 1;
+	khanhad = read(fd, buff, BUFFER_SIZE);
+	while (khanhad)
 	{
-		free(line);
-		return (NULL);
+		buff[khanhad] = '\0';
+		line = ft_strjoin(line, buff);
+		if ((khanhad < BUFFER_SIZE && khanhad > 0) || ha_nee(line, '\n'))
+			break ;
+		khanhad = read(fd, buff, BUFFER_SIZE);
 	}
+	if (buff)
+		free (buff);
+//	if (!line || khanhad == 0)
+//		return (NULL);
 	res = find_result(line);
 	line = teelua(line);
+	// if (!res)
+	// 	free(line);
 	return (res);
 }
