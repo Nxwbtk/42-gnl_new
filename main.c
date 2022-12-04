@@ -21,7 +21,7 @@ int main(void)
     int fd;
     char *s;
 
-    fd = open("gnlTester/files/41_no_nl", O_RDONLY);
+    fd = open("gnlTester/files/41_with_nl", O_RDONLY);
     // fd = open("nl", O_RDONLY);
     printf("|%d|\n",fd);
     // printf("%d\n", read(fd, NULL,1));
@@ -29,7 +29,7 @@ int main(void)
     //printf("%s", s);
     //free(s);
     s = get_next_line(fd);
-    printf("|%s|", s);
+    printf("|%s|\n", s);
     free(s);
 
     close(fd);

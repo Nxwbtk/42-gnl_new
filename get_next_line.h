@@ -26,8 +26,9 @@
 
 char	*get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_piset_len(const char *s);
+ssize_t	ft_piset_len(const char *s);
 int		ha_nee(char *str, char c);
-size_t	ft_strlen(const char *s);
+ssize_t	ft_strlen(const char *s);
+char	*free_line(char *line);
 
 #endif

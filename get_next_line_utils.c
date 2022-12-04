@@ -12,9 +12,9 @@
 
 #include "get_next_line.h"
 
-size_t	ft_piset_len(const char *s)
+ssize_t	ft_piset_len(const char *s)
 {
-	size_t	i;
+	ssize_t	i;
 
 	i = 0;
 	if (!s)
@@ -26,9 +26,9 @@ size_t	ft_piset_len(const char *s)
 	return (i);
 }
 
-size_t	ft_strlen(const char *s)
+ssize_t	ft_strlen(const char *s)
 {
-	size_t	i;
+	ssize_t	i;
 
 	i = 0;
 	if (!s)
@@ -93,6 +93,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	res = lets_join(res, s1, s2);
 	res[s_toml] = '\0';
 	if (s1 != NULL)
-		free((char *)s1);
+		s1 = free_line((char *)s1);
 	return (res);
 }

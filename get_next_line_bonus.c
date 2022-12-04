@@ -12,31 +12,39 @@
 
 #include "get_next_line_bonus.h"
 
+char	*free_line(char *line)
+{
+	if (line)
+		free(line);
+	return (NULL);
+}
+
 char	*teelua(char *line)
 {
 	char	*tmp;
 	ssize_t	i;
-	ssize_t	len_left;
-	size_t	len_ret;
 
-	if (!line[0])
+	if (!line && !line[0])
 	{
-		free(line);
+		line = free_line(line);
 		return (NULL);
 	}
-	len_ret = ft_piset_len(line);
-	len_left = ft_strlen(line) - len_ret;
-	tmp = (char *)malloc(sizeof(char) * (len_left + 1));
+	if (!(ft_strlen(line) - ft_piset_len(line)))
+	{
+		line = free_line(line);
+		return (NULL);
+	}
+	tmp = (char *)malloc(sizeof(char) * ((ft_strlen(line) - \
+		ft_piset_len(line)) + 2));
 	if (!tmp)
 		return (NULL);
 	i = -1;
-	while (++i < len_left + 1)
-		tmp[i] = line[i + len_ret];
-	i--;
-	while (line[++i + len_ret] == '\n')
-		tmp[i] = line[i + len_ret];
+	while (++i < (ft_strlen(line) - ft_piset_len(line)))
+		tmp[i] = line[i + ft_piset_len(line)];
+	if (line[i + ft_piset_len(line)] == '\n')
+		tmp[i] = line[i + ft_piset_len(line)];
 	tmp[i] = '\0';
-	free(line);
+	line = free_line(line);
 	return (tmp);
 }
 
